@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+if(file_exists(__DIR__.'/local/modules/aspect.core/cli.php')) {
+    include __DIR__.'/local/modules/aspect.core/cli.php';
+} else if (file_exists(__DIR__.'/bitrix/modules/aspect.core/cli.php')) {
+    include __DIR__.'/bitrix/modules/aspect.core/cli.php';
+} else {
+    throw new \Exception('CLI not detected');
+}

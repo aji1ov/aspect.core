@@ -1,0 +1,18 @@
+{
+  "require" : {
+    "php": "^8.2",
+    "dragonmantank/cron-expression": "^3.3",
+    "laravel/serializable-closure": "v2.0.0",
+    "nesbot/carbon": "^3.8",
+    "symfony/console": "^4.3",
+    "symfony/lock": "^5.4.15",
+    "mockery/mockery": "^1.6",
+    "phpunit/phpunit": "^11"
+  },
+  "autoload" : {
+    "psr-4" : {
+      "Aspect\\Lib\\": "./src",
+      "Aspect\\App\\": "./../../php_interface/lib/"
+    }
+  }
+}
