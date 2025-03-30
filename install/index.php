@@ -1,6 +1,8 @@
 <?php
 
 use Aspect\Lib\Application;
+use Aspect\Lib\Facade\Command;
+use Aspect\Lib\Preset\Command\Orm\Table\Create;
 use Bitrix\Main\EventManager;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
@@ -45,9 +47,28 @@ class Aspect_Core extends CModule
         touch(__DIR__.'/../../../../aspect');
         copy(__DIR__.'/../wizard/aspect', __DIR__.'/../../../../aspect');
 
+        $this->createOrm(\Aspect\Lib\Repository\JobLogTable::class);
+        $this->createOrm(\Aspect\Lib\Repository\QueueTable::class);
+        $this->createOrm(\Aspect\Lib\Repository\ScheduleTable::class);
+        $this->createOrm(\Aspect\Lib\Repository\ScriptTable::class);
+
         ModuleManager::registerModule($this->MODULE_ID);
 
         return true;
+    }
+
+    /**
+     * @throws \Bitrix\Main\SystemException
+     * @throws \Bitrix\Main\ArgumentException
+     */
+    private function createOrm(string $tableClass): void
+    {
+        $connection = \Bitrix\Main\Application::getConnection();
+
+        assert(is_a($tableClass, \Bitrix\Main\Entity\DataManager::class, true));
+        if(!$connection->isTableExists($tableClass::getTableName())) {
+            $tableClass::getEntity()->createDbTable();
+        }
     }
 
     private function unzip(string $pathToArchive, string $pathToExtract): void
