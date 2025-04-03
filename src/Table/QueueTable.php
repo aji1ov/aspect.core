@@ -1,18 +1,17 @@
 <?php
 
-namespace Aspect\Lib\Repository;
+namespace Aspect\Lib\Table;
 
 use Bitrix\Main\Entity;
 
-class ScriptTable extends Entity\DataManager
+class QueueTable extends Entity\DataManager
 {
     /**
      * @return string
      */
     public static function getTableName()
     {
-
-        return 'aspect_script';
+        return 'aspect_queue';
     }
 
     /**
@@ -26,15 +25,21 @@ class ScriptTable extends Entity\DataManager
                 'primary' => true,
                 'autocomplete' => true
             ]),
-            new Entity\TextField('NAME', [
+            new Entity\TextField('SERIAL', [
                 'required' => true
             ]),
-            new Entity\BooleanField('RUNNING', [
+            new Entity\TextField('SIGN', [
+                'required' => true
             ]),
-            new Entity\BooleanField('CANCELLED', [
+            new Entity\TextField('TAG', [
+                'required' => true
             ]),
-            new Entity\TextField('OUTPUT', [
+            new Entity\IntegerField('START_AT', [
+                'required' => true
             ]),
+            new Entity\BooleanField('BUSY'),
+
         ];
     }
+
 }

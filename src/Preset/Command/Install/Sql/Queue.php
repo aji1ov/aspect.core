@@ -3,8 +3,8 @@
 namespace Aspect\Lib\Preset\Command\Install\Sql;
 
 use Aspect\Lib\Blueprint\DI\Fetch;
-use Aspect\Lib\Repository\JobLogTable;
-use Aspect\Lib\Repository\QueueTable;
+use Aspect\Lib\Table\JobLogTable;
+use Aspect\Lib\Table\QueueTable;
 use Aspect\Lib\Service\Console\Color;
 use Aspect\Lib\Service\Console\Command;
 use Bitrix\Main\ArgumentException;

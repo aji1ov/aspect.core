@@ -2,7 +2,7 @@
 
 namespace Aspect\Lib\Manager;
 
-use Aspect\Lib\Repository\ScriptTable;
+use Aspect\Lib\Table\ScriptTable;
 use Aspect\Lib\Struct\Mutex;
 use Aspect\Lib\Struct\ServiceLocator;
 

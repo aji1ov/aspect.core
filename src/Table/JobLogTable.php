@@ -1,17 +1,18 @@
 <?php
 
-namespace Aspect\Lib\Repository;
+namespace Aspect\Lib\Table;
 
 use Bitrix\Main\Entity;
+use Bitrix\Main\ORM\Fields\ArrayField;
 
-class QueueTable extends Entity\DataManager
+class JobLogTable extends Entity\DataManager
 {
     /**
      * @return string
      */
     public static function getTableName()
     {
-        return 'aspect_queue';
+        return 'aspect_job_log';
     }
 
     /**
@@ -25,20 +26,22 @@ class QueueTable extends Entity\DataManager
                 'primary' => true,
                 'autocomplete' => true
             ]),
-            new Entity\TextField('SERIAL', [
+            new Entity\TextField('NAME', [
                 'required' => true
             ]),
-            new Entity\TextField('SIGN', [
-                'required' => true
-            ]),
-            new Entity\TextField('TAG', [
-                'required' => true
-            ]),
-            new Entity\IntegerField('START_AT', [
-                'required' => true
-            ]),
-            new Entity\BooleanField('BUSY'),
+            new Entity\BooleanField('SUCCESS', [
 
+            ]),
+            new Entity\IntegerField('STARTED_AT', [
+                'required' => true
+            ]),
+            new Entity\IntegerField('DURATION', [
+                'required' => true
+            ]),
+            (new ArrayField('ERRORS', [
+            ]))->configureSerializationPhp(),
+            (new ArrayField('WARNINGS', [
+            ]))->configureSerializationPhp(),
         ];
     }
 

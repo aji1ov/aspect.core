@@ -1,18 +1,18 @@
 <?php
 
-namespace Aspect\Lib\Repository;
+namespace Aspect\Lib\Table;
 
 use Bitrix\Main\Entity;
-use Bitrix\Main\ORM\Fields\ArrayField;
 
-class JobLogTable extends Entity\DataManager
+class ScriptTable extends Entity\DataManager
 {
     /**
      * @return string
      */
     public static function getTableName()
     {
-        return 'aspect_job_log';
+
+        return 'aspect_script';
     }
 
     /**
@@ -29,20 +29,12 @@ class JobLogTable extends Entity\DataManager
             new Entity\TextField('NAME', [
                 'required' => true
             ]),
-            new Entity\BooleanField('SUCCESS', [
-
+            new Entity\BooleanField('RUNNING', [
             ]),
-            new Entity\IntegerField('STARTED_AT', [
-                'required' => true
+            new Entity\BooleanField('CANCELLED', [
             ]),
-            new Entity\IntegerField('DURATION', [
-                'required' => true
+            new Entity\TextField('OUTPUT', [
             ]),
-            (new ArrayField('ERRORS', [
-            ]))->configureSerializationPhp(),
-            (new ArrayField('WARNINGS', [
-            ]))->configureSerializationPhp(),
         ];
     }
-
 }

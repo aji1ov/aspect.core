@@ -4,7 +4,7 @@ namespace Aspect\Lib\Service\Background\Executor;
 
 use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\Facade\Queue;
-use Aspect\Lib\Repository\ScheduleTable;
+use Aspect\Lib\Table\ScheduleTable;
 use Aspect\Lib\Service\Background\Event;
 use Aspect\Lib\Service\Console\Color;
 use Aspect\Lib\Struct\Mutex;

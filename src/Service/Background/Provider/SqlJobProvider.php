@@ -2,7 +2,7 @@
 
 namespace Aspect\Lib\Service\Background\Provider;
 
-use Aspect\Lib\Repository\QueueTable;
+use Aspect\Lib\Table\QueueTable;
 use Aspect\Lib\Service\Background\Job;
 use Aspect\Lib\Service\Background\Dispatcher\SqlJobDispatcher;
 use Aspect\Lib\Struct\Mutex;

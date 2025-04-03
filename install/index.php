@@ -47,10 +47,10 @@ class Aspect_Core extends CModule
         touch(__DIR__.'/../../../../aspect');
         copy(__DIR__.'/../wizard/aspect', __DIR__.'/../../../../aspect');
 
-        $this->createOrm(\Aspect\Lib\Repository\JobLogTable::class);
-        $this->createOrm(\Aspect\Lib\Repository\QueueTable::class);
-        $this->createOrm(\Aspect\Lib\Repository\ScheduleTable::class);
-        $this->createOrm(\Aspect\Lib\Repository\ScriptTable::class);
+        $this->createOrm(\Aspect\Lib\Table\JobLogTable::class);
+        $this->createOrm(\Aspect\Lib\Table\QueueTable::class);
+        $this->createOrm(\Aspect\Lib\Table\ScheduleTable::class);
+        $this->createOrm(\Aspect\Lib\Table\ScriptTable::class);
 
         ModuleManager::registerModule($this->MODULE_ID);
 

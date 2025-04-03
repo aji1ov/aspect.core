@@ -4,7 +4,7 @@ namespace Aspect\Lib\Preset\Command\Script;
 
 use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\Manager\ScriptManager;
-use Aspect\Lib\Repository\ScriptTable;
+use Aspect\Lib\Table\ScriptTable;
 use Aspect\Lib\Service\Console\Argument;
 use Aspect\Lib\Service\Console\Command;
 use Aspect\Lib\Support\Interfaces\ScriptManagerInterface;

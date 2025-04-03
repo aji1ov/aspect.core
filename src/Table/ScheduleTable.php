@@ -1,6 +1,6 @@
 <?php
 
-namespace Aspect\Lib\Repository;
+namespace Aspect\Lib\Table;
 
 use Bitrix\Main\Entity;
 
