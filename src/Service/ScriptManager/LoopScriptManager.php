@@ -17,8 +17,10 @@ class LoopScriptManager implements ScriptManagerInterface
 
     public function observe(string $name): void
     {
+        $env = parse_ini_file($_SERVER['DOCUMENT_ROOT']."/.env");
+        $phpShell = $env['PHP_SHELL'] ?? 'php';
 
-        $this->scriptProcess->start("php aspect script.exec ".$name);
+        $this->scriptProcess->start($phpShell . " aspect script.exec ".$name);
         while ($this->scriptProcess->isRunning()) {
 
             if ($outputData = $this->scriptProcess->readAvailableOutput()) {

@@ -7,7 +7,6 @@ use Aspect\Lib\Application;
 trait ServiceLocator
 {
     /**
-     * @return ServiceLocator
      * @throws \Exception
      */
     public static function getInstance(): static
