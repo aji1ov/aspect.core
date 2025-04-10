@@ -19,7 +19,6 @@ class Interactive
 
     public function ask(string $question, ?string $defaultAnswer = null): string
     {
-        $helper = new QuestionHelper();
-        return $helper->ask($this->input, $this->output, new Question($question."\n", $defaultAnswer));
+        return (new QuestionHelper())->ask($this->input, $this->output, new Question($question."\n", $defaultAnswer));
     }
 }

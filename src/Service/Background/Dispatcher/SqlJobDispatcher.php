@@ -3,23 +3,27 @@
 namespace Aspect\Lib\Service\Background\Dispatcher;
 
 use Aspect\Lib\Application;
-use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\Context;
-use Aspect\Lib\Table\JobLogTable;
-use Aspect\Lib\Table\QueueTable;
 use Aspect\Lib\Service\Background\Job;
 use Aspect\Lib\Service\Background\JobInfo;
 use Aspect\Lib\Service\Background\Provider\SqlJobProvider;
 use Aspect\Lib\Service\Console\Color;
 use Aspect\Lib\Support\Interfaces\JobDispatcherInterface;
 use Aspect\Lib\Support\Interfaces\JobProviderInterface;
+use Aspect\Lib\Table\JobLogTable;
+use Aspect\Lib\Table\QueueTable;
+use Bitrix\Main\ArgumentException;
 use Bitrix\Main\ObjectPropertyException;
 use Bitrix\Main\SystemException;
 use Psr\Log\LoggerInterface;
+use Exception;
 
 class SqlJobDispatcher implements JobDispatcherInterface
 {
 
+    /**
+     * @throws Exception
+     */
     public function dispatch(Job $job, string $queue, int $startAt): void
     {
         QueueTable::add([
@@ -36,9 +40,12 @@ class SqlJobDispatcher implements JobDispatcherInterface
      */
     public function isDefined(Job $job, string $queue): bool
     {
-        return !!QueueTable::getCount(['SIGN' => $job->getSign(), 'TAG' => $queue]);
+        return (bool) QueueTable::getCount(['SIGN' => $job->getSign(), 'TAG' => $queue]);
     }
 
+    /**
+     * @throws Exception
+     */
     public function getProvider(?array $queues): JobProviderInterface
     {
         $provider = new SqlJobProvider(
@@ -51,7 +58,10 @@ class SqlJobDispatcher implements JobDispatcherInterface
         return $provider;
     }
 
-    public function logJob(Job $job, bool $successfully, int $startedAt, int $duration, ?array $errors = [])
+    /**
+     * @throws Exception
+     */
+    public function logJob(Job $job, bool $successfully, int $startedAt, int $duration, ?array $errors = []): void
     {
         $fields = [
             'NAME' => $job->getName(),
@@ -87,9 +97,9 @@ class SqlJobDispatcher implements JobDispatcherInterface
     /**
      * @param array|null $queues
      * @return JobInfo[]
-     * @throws \Bitrix\Main\ArgumentException
-     * @throws \Bitrix\Main\ObjectPropertyException
-     * @throws \Bitrix\Main\SystemException
+     * @throws ArgumentException
+     * @throws ObjectPropertyException
+     * @throws SystemException
      */
     public function getInfo(?array $queues): array
     {

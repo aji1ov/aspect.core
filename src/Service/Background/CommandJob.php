@@ -2,10 +2,10 @@
 
 namespace Aspect\Lib\Service\Background;
 
-use Aspect\Lib\Application;
 use Aspect\Lib\Exception\CommandException;
 use Aspect\Lib\Facade\Command;
 use Aspect\Lib\Service\Console\Fake;
+use Exception;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use ReflectionException;
@@ -40,6 +40,9 @@ class CommandJob extends Job
         $this->logger->notice($output->fetch());
     }
 
+    /**
+     * @throws Exception
+     */
     public function getName(): string
     {
         if($command = Command::getInstance($this->command)) {

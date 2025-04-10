@@ -11,16 +11,14 @@ use Aspect\Lib\Facade\Yakov;
 use Aspect\Lib\Support\Interfaces\CommandDispatcherInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
+use ReflectionClass;
 use ReflectionException;
 use Symfony\Component\Console\Command\LockableTrait;
-use Symfony\Component\Console\Exception\ExceptionInterface;
-use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
 
 abstract class Command
 {
@@ -37,7 +35,7 @@ abstract class Command
      */
     abstract public static function structure(): array;
 
-    public final static function getName(): string
+    final public static function getName(): string
     {
         foreach (Yakov::getPathToCommands() as $namespace => $folder) {
             if(str_starts_with(static::class, $namespace)) {
@@ -51,7 +49,7 @@ abstract class Command
      * @throws CommandException
      * @throws ReflectionException
      */
-    public static final function call(Command $command, InputInterface $input, OutputInterface $output): void
+    final public static function call(Command $command, InputInterface $input, OutputInterface $output): void
     {
         static::callInternal($command, $input, $output);
     }
@@ -60,7 +58,7 @@ abstract class Command
      * @throws ReflectionException
      * @throws CommandException
      */
-    public static final function callNoWait(Command $command, InputInterface $input, OutputInterface $output): void
+    final public static function callNoWait(Command $command, InputInterface $input, OutputInterface $output): void
     {
         static::callInternal($command, $input, $output, false);
     }
@@ -90,10 +88,8 @@ abstract class Command
      */
     private static function beforeCall(Command $command, bool $lockable, bool $wait): void
     {
-        if($lockable) {
-            if($command->lock($command->getName(), $wait)) {
-                throw new LockedCommandException("Command is already running in another process");
-            }
+        if($lockable && $command->lock($command->getName(), $wait)) {
+            throw new LockedCommandException("Command is already running in another process");
         }
     }
 
@@ -107,9 +103,9 @@ abstract class Command
     /**
      * @throws ReflectionException
      */
-    public static final function isLockable(Command $command): bool
+    final public static function isLockable(Command $command): bool
     {
-        $rc = new \ReflectionClass($command::class);
+        $rc = new ReflectionClass($command::class);
         return (bool) $rc->getAttributes(Lockable::class);
     }
 

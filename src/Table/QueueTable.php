@@ -2,9 +2,10 @@
 
 namespace Aspect\Lib\Table;
 
-use Bitrix\Main\Entity;
+use Bitrix\Main\ORM\Fields;
+use Bitrix\Main\ORM\Data\DataManager;
 
-class QueueTable extends Entity\DataManager
+class QueueTable extends DataManager
 {
     /**
      * @return string
@@ -21,23 +22,23 @@ class QueueTable extends Entity\DataManager
     public static function getMap()
     {
         return [
-            new Entity\IntegerField('ID', [
+            new Fields\IntegerField('ID', [
                 'primary' => true,
                 'autocomplete' => true
             ]),
-            new Entity\TextField('SERIAL', [
+            new Fields\TextField('SERIAL', [
                 'required' => true
             ]),
-            new Entity\TextField('SIGN', [
+            new Fields\TextField('SIGN', [
                 'required' => true
             ]),
-            new Entity\TextField('TAG', [
+            new Fields\TextField('TAG', [
                 'required' => true
             ]),
-            new Entity\IntegerField('START_AT', [
+            new Fields\IntegerField('START_AT', [
                 'required' => true
             ]),
-            new Entity\BooleanField('BUSY'),
+            new Fields\BooleanField('BUSY'),
 
         ];
     }

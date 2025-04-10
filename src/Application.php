@@ -61,10 +61,12 @@ final class Application
         foreach ($this->collectFactoryBinds() as $factoryClass) {
             /** @var Kernel $factory */
             $factory = new $factoryClass($this);
-            $entities = array_merge($entities, $factory->bind());
+            $entities[] = $factory->bind();
         }
 
-        $entities = array_merge($entities, include_once Yakov::getFactoryPath());
+        $entities[] = include Yakov::getFactoryPath();
+
+        $entities = array_merge(...$entities);
 
         foreach ($entities as $key => $entity) {
             if (is_a($entity, Factory::class, true)) {

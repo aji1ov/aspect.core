@@ -2,10 +2,10 @@
 
 namespace Aspect\Lib\Table;
 
-use Bitrix\Main\Entity;
-use Bitrix\Main\ORM\Fields\ArrayField;
+use Bitrix\Main\ORM\Fields;
+use Bitrix\Main\ORM\Data\DataManager;
 
-class JobLogTable extends Entity\DataManager
+class JobLogTable extends DataManager
 {
     /**
      * @return string
@@ -22,25 +22,26 @@ class JobLogTable extends Entity\DataManager
     public static function getMap()
     {
         return [
-            new Entity\IntegerField('ID', [
+            new Fields\IntegerField('ID', [
                 'primary' => true,
                 'autocomplete' => true
             ]),
-            new Entity\TextField('NAME', [
+            new Fields\TextField('NAME', [
                 'required' => true
             ]),
-            new Entity\BooleanField('SUCCESS', [
+            new Fields\BooleanField('SUCCESS', [
 
             ]),
-            new Entity\IntegerField('STARTED_AT', [
+            new Fields\IntegerField('STARTED_AT', [
                 'required' => true
             ]),
-            new Entity\IntegerField('DURATION', [
+            new Fields\IntegerField('DURATION', [
                 'required' => true
             ]),
-            (new ArrayField('ERRORS', [
+            (new Fields\ArrayField('ERRORS', [
             ]))->configureSerializationPhp(),
-            (new ArrayField('WARNINGS', [
+
+            (new Fields\ArrayField('WARNINGS', [
             ]))->configureSerializationPhp(),
         ];
     }

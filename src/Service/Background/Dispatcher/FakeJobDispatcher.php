@@ -72,7 +72,7 @@ class FakeJobDispatcher implements JobDispatcherInterface, FakeInterface
      */
     public function getProvider(?array $queues): JobProviderInterface
     {
-        throw new Exception("Not implemeted");
+        throw new Exception("Not implemented");
     }
 
     public function getInfo(?array $queues): array
@@ -86,11 +86,8 @@ class FakeJobDispatcher implements JobDispatcherInterface, FakeInterface
      */
     public function assertCalls(string $job): void
     {
-        if ($rule = $this->rules[$job])
-        {
-            if (!$rule->getCallsCount()) {
-                throw new ExpectedFakerException('Expected command('.$job.') not added');
-            }
+        if (($rule = $this->rules[$job]) && !$rule->getCallsCount()) {
+            throw new ExpectedFakerException('Expected command('.$job.') not added');
         }
     }
 

@@ -6,7 +6,6 @@ use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\DI\FakeInterface;
 use Aspect\Lib\PhpUnit\Faker;
 use Aspect\Lib\PhpUnit\Faker\CommandFakerRule;
-use Aspect\Lib\PhpUnit\Faker\Exception\AgentFakerException\ExpectedAgentFakerException;
 use Aspect\Lib\PhpUnit\Faker\Exception\DisallowedFakerException;
 use Aspect\Lib\PhpUnit\Faker\Exception\ExpectedFakerException;
 use Aspect\Lib\PhpUnit\Faker\FakerRule;
@@ -72,10 +71,8 @@ class FakeCommandDispatcher implements CommandDispatcherInterface, FakeInterface
      */
     public function assertCalls(string $command): void
     {
-        if ($rule = $this->rules[$command::getName()]) {
-            if (!$rule->getCallsCount()) {
-                throw new ExpectedFakerException('Expected command not called');
-            }
+        if (($rule = $this->rules[$command::getName()]) && !$rule->getCallsCount()) {
+            throw new ExpectedFakerException('Expected command not called');
         }
     }
 

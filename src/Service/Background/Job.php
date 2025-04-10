@@ -26,8 +26,8 @@ abstract class Job extends Serializable
 
     public static function unserialize(int $id, string $serial, int $plannedAt): Job
     {
-        $job = unserialize($serial);
-        assert(is_a($job, Job::class, true));
+        $job = unserialize($serial, ['allowed_classes' => true]);
+        assert(is_a($job, __CLASS__, true));
 
         $job->id = $id;
         $job->plannedAt = $plannedAt;

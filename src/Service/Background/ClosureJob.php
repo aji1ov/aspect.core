@@ -3,9 +3,9 @@
 namespace Aspect\Lib\Service\Background;
 
 use Aspect\Lib\Application;
-use Aspect\Lib\Blueprint\Ignore;
-use \Closure;
+use Closure;
 use Laravel\SerializableClosure\SerializableClosure;
+use ReflectionException;
 
 class ClosureJob extends Job
 {
@@ -18,7 +18,7 @@ class ClosureJob extends Job
     }
 
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function handle(): void
     {

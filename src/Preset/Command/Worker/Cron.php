@@ -14,9 +14,8 @@ class Cron extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        command('schedule.update');
-        command('queue.run', ['--time' => $input->getOption('time'), '-n' => true]);
-
+        command('schedule.update', [], $output);
+        command('queue.run', ['--time' => $input->getOption('time'), '-n' => true], $output);
     }
 
     public static function getDescription(): string

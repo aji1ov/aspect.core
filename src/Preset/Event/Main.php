@@ -5,6 +5,8 @@ namespace Aspect\Lib\Preset\Event;
 use Aspect\Lib\Blueprint\Event\ArrayEvent;
 use Aspect\Lib\Event\EventPackage;
 use Aspect\Lib\Event\ListEventSource;
+use Aspect\Lib\Preset\Background\HealthJob;
+use CAdminNotify;
 
 class Main extends EventPackage
 {
@@ -42,5 +44,25 @@ class Main extends EventPackage
             ]
         );
         $source->setOutput('global', $global);
+
+        if (!HealthJob::check()) {
+            if (HealthJob::isCacheOutdated()) {
+                CAdminNotify::Add([
+                    'MESSAGE' => 'Планировщик задач <a href="/"><b>работает некорректно</b></a>.',
+                    'TAG' => 'test_notif',
+                    'MODULE_ID' => 'aspect.core',
+                    'ENABLE_CLOSE' => 'Y',
+                ]);
+            } else {
+                CAdminNotify::Add([
+                    'MESSAGE' => 'Для корректной работы модуля <em>aspect.core</em> необходимо <a href="/"><b>завершить настройку</b></a>.',
+                    'TAG' => 'test_notif',
+                    'MODULE_ID' => 'aspect.core',
+                    'ENABLE_CLOSE' => 'Y',
+                ]);
+            }
+
+        }
+
     }
 }

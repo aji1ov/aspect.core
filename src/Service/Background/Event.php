@@ -4,6 +4,7 @@ namespace Aspect\Lib\Service\Background;
 
 use Aspect\Lib\Blueprint\Ignore;
 use Cron\CronExpression;
+use Exception;
 
 class Event
 {
@@ -29,7 +30,7 @@ class Event
     public function description(string $description): static
     {
         $this->description = $description;
-        if($this->job instanceof  ClosureJob) {
+        if ($this->job instanceof ClosureJob) {
             $this->job->setName($description);
         }
         return $this;
@@ -45,7 +46,7 @@ class Event
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function getCheckTime(int $now): int
     {

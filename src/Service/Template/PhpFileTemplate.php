@@ -4,7 +4,7 @@ namespace Aspect\Lib\Service\Template;
 
 class PhpFileTemplate
 {
-    private array $keys = [];
+    private array $keys;
 
     private function __construct(array $keys)
     {

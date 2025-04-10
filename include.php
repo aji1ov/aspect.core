@@ -11,10 +11,13 @@ use Symfony\Component\Console\Input\InputInterface;
 
 include_once __DIR__. '/src/functions.php';
 
-function notice(...$arguments): void
-{
-    Application::getInstance()->get(NoticerInterface::class)->notice(...$arguments);
+if(!function_exists('notice')) {
+    function notice(...$arguments): void
+    {
+        Application::getInstance()->get(NoticerInterface::class)->notice(...$arguments);
+    }
 }
+
 
 function now(): Carbon
 {

@@ -12,9 +12,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class CommandDispatcher implements CommandDispatcherInterface
 {
-
-
-
     /**
      * @throws CommandException
      */

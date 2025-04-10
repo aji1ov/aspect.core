@@ -9,7 +9,6 @@ use Aspect\Lib\Service\Background\Event;
 use Aspect\Lib\Service\Console\Color;
 use Aspect\Lib\Struct\Mutex;
 use Aspect\Lib\Support\Interfaces\JobDispatcherInterface;
-use Aspect\Lib\Support\Interfaces\JobProviderInterface;
 use Aspect\Lib\Support\Interfaces\ScheduleExecutorInterface;
 
 class SqlScheduleExecutor implements ScheduleExecutorInterface
@@ -33,7 +32,7 @@ class SqlScheduleExecutor implements ScheduleExecutorInterface
             foreach ($events as $event) {
                 $sign = Event::sign($event);
 
-                if(!in_array($sign, array_keys($registered))) {
+                if(!array_key_exists($sign, $registered)) {
                     notice(Color::GREEN->wrap("Register event: ") . Color::DARK_GREY->wrap($event->getDescription()));
                     ScheduleTable::add([
                         'SIGN' => $sign,
@@ -51,7 +50,7 @@ class SqlScheduleExecutor implements ScheduleExecutorInterface
             }
 
             foreach ($stored as $entity) {
-                if(!in_array($entity['SIGN'], $installed)) {
+                if(!in_array($entity['SIGN'], $installed, true)) {
                     ScheduleTable::delete($entity['ID']);
                     notice(Color::RED->wrap("Remove event: ") . Color::DARK_GREY->wrap($entity['SIGN']));
                 }

@@ -10,9 +10,9 @@ class ProcOpenScriptProcess implements ScriptProcessInterface
     private array $pipes;
     private int $processId;
 
-    const PIPE_IN = 0;
-    const PIPE_OUT = 1;
-    const PIPE_ERR = 2;
+    public const PIPE_IN = 0;
+    public const PIPE_OUT = 1;
+    public const PIPE_ERR = 2;
 
     public function start(string $command): bool
     {

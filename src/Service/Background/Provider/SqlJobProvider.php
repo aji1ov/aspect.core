@@ -9,6 +9,7 @@ use Aspect\Lib\Struct\Mutex;
 use Aspect\Lib\Support\Interfaces\JobProviderInterface;
 use Exception;
 use Psr\Log\LoggerInterface;
+use Throwable;
 
 class SqlJobProvider implements JobProviderInterface
 {
@@ -28,7 +29,7 @@ class SqlJobProvider implements JobProviderInterface
 
     public function has(int $startAt): bool
     {
-        return $this->withWaitedLock(fn () => !!QueueTable::getCount($this->getQuery($startAt)));
+        return $this->withWaitedLock(fn () => (bool)QueueTable::getCount($this->getQuery($startAt)));
     }
 
     public function remove(int $id): void
@@ -80,6 +81,9 @@ class SqlJobProvider implements JobProviderInterface
         return $filter;
     }
 
+    /**
+     * @throws Exception
+     */
     public function handle(Job $job): bool
     {
         $successfully = true;
@@ -88,7 +92,7 @@ class SqlJobProvider implements JobProviderInterface
 
         try {
             $job->handle();
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger->error($e);
             $errors = [$e->getMessage()];
             $successfully = false;

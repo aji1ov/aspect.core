@@ -3,13 +3,15 @@
 namespace Aspect\Lib\Service\Console;
 
 use Aspect\Lib\Application;
-use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\Facade\Yakov;
 use Aspect\Lib\Helper\ClassLoader;
+use Exception;
 
 class CommandLocator
 {
-
+    /**
+     * @throws Exception
+     */
     public function locateOrFallback(string $command, Command $fallback): Command
     {
         if($foundCommand = $this->locate($command)) {
@@ -22,6 +24,7 @@ class CommandLocator
     /**
      * @param string $command
      * @return Command|null
+     * @throws Exception
      */
     public function locate(string $command): ?Command
     {
@@ -55,7 +58,7 @@ class CommandLocator
     public function groupOfCommands(): array
     {
         $tree = [];
-        $list = static::listOfCommands();
+        $list = $this->listOfCommands();
         natsort($list);
 
         foreach ($list as $name => $command) {
@@ -88,7 +91,7 @@ class CommandLocator
         return $tree;
     }
 
-    public static function scan($pattern, $flags = 0)
+    public static function scan($pattern, $flags = 0): array
     {
         $files = glob($pattern, $flags);
         foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {

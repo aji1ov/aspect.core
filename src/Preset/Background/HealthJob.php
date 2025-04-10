@@ -2,35 +2,26 @@
 
 namespace Aspect\Lib\Preset\Background;
 
+use Aspect\Lib\Cache\HealthCache;
 use Aspect\Lib\Service\Background\Job;
-use Bitrix\Main\Data\Cache;
+use Carbon\Carbon;
 
 class HealthJob extends Job
 {
-    const TTL = 3600;
-    const DIR = '/aspect/lib/background/health/';
-    const KEY = 'result';
-
-    private static function cache(): Cache
-    {
-        $cache = Cache::createInstance();
-        $cache->initCache(static::TTL, static::class, static::DIR);
-
-        return $cache;
-    }
 
     public function handle(): void
     {
-        $cache = static::cache();
-        $cache->startDataCache(static::TTL, static::class, static::DIR);
-        $cache->endDataCache([
-            static::KEY => now()->unix()
-        ]);
+        HealthCache::getInstance()->set(static::class, now()->unix());
     }
 
     public static function check(): bool
     {
-        $lastRun = static::cache()->getVars()[static::KEY] ?? 0;
-        return $lastRun + static::TTL > now()->unix();
+        $cache = HealthCache::getInstance();
+        return (int) $cache->get(static::class, 0) + $cache->ttl() > now()->unix();
+    }
+
+    public static function isCacheOutdated(): bool
+    {
+        return HealthCache::getInstance()->has(static::class);
     }
 }

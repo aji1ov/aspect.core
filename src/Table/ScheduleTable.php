@@ -2,9 +2,10 @@
 
 namespace Aspect\Lib\Table;
 
-use Bitrix\Main\Entity;
+use Bitrix\Main\ORM\Fields;
+use Bitrix\Main\ORM\Data\DataManager;
 
-class ScheduleTable extends Entity\DataManager
+class ScheduleTable extends DataManager
 {
     /**
      * @return string
@@ -21,14 +22,14 @@ class ScheduleTable extends Entity\DataManager
     public static function getMap()
     {
         return [
-            new Entity\IntegerField('ID', [
+            new Fields\IntegerField('ID', [
                 'primary' => true,
                 'autocomplete' => true
             ]),
-            new Entity\TextField('SIGN', [
+            new Fields\TextField('SIGN', [
                 'required' => true
             ]),
-            new Entity\IntegerField('CHECK_TIME', [
+            new Fields\IntegerField('CHECK_TIME', [
                 'required' => true
             ]),
 
