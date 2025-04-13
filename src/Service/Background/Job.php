@@ -68,6 +68,11 @@ abstract class Job extends Serializable
         return $this->checkUnique;
     }
 
+    public function setUnique(bool $isUnique): void
+    {
+        $this->checkUnique = $isUnique;
+    }
+
     public function getId(): int
     {
         return $this->id;

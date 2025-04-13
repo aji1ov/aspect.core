@@ -14,7 +14,7 @@ final class Queue
 {
     const COMMON = 'common';
     const COMMAND = 'command';
-    const CRON = 'cron';
+    const SCHEDULED = 'scheduled';
 
     /**
      * @param class-string<Job>|Job|callable $job

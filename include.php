@@ -19,9 +19,19 @@ if(!function_exists('notice')) {
 }
 
 
+/**
+ * Возвращает текущее время в формате Carbon.
+ *
+ * @return Carbon
+ */
 function now(): Carbon
 {
     return Carbon::now();
+}
+
+function unix(int $time): Carbon
+{
+    return Carbon::createFromTimestamp($time);
 }
 
 /**
@@ -44,3 +54,5 @@ function queue(string|callable|Job $job, ?string $taggedQueue = null, int|Carbon
 if (class_exists(Application::class)) {
     Application::getInstance();
 }
+
+Carbon::setLocale('ru');

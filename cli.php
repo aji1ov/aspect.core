@@ -10,15 +10,14 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use \Aspect\Lib\Service\Pretty\Exception as PrettyException;
 
-$_SERVER['DOCUMENT_ROOT']  = realpath(__DIR__.'/../../..');
+$_SERVER['DOCUMENT_ROOT']  = dirname(__DIR__, 3);
 require_once($_SERVER['DOCUMENT_ROOT'] . "/bitrix/modules/main/include/prolog_before.php");
 
 $app = Application::getInstance();
 
-if($app->gateway() !== Gateway::CLI) {
+if ($app->gateway() !== Gateway::CLI) {
     die('Bad gateway');
 }
-
 
 $app->bound(Context::CLI, function(InputInterface $input, OutputInterface $output, PrettyException $pretty) use ($app) {
     global $argv;
@@ -27,7 +26,6 @@ $app->bound(Context::CLI, function(InputInterface $input, OutputInterface $outpu
     } catch (\Throwable $e) {
         notice($pretty->makePretty($e));
     }
-
 });
 
 

@@ -35,8 +35,5 @@ class ClosureJob extends Job
         return $this->name ?? parent::getName();
     }
 
-    public function setUnique(bool $isUnique): void
-    {
-        $this->checkUnique = $isUnique;
-    }
+
 }

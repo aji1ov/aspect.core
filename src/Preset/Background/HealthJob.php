@@ -2,26 +2,23 @@
 
 namespace Aspect\Lib\Preset\Background;
 
-use Aspect\Lib\Cache\HealthCache;
+use Aspect\Lib\Blueprint\DI\Fetch;
+use Aspect\Lib\Service\Admin\AdminNotifyService;
 use Aspect\Lib\Service\Background\Job;
-use Carbon\Carbon;
 
 class HealthJob extends Job
 {
 
+    #[Fetch]
+    private AdminNotifyService $adminNotifyService;
+
+    public function __construct()
+    {
+        $this->setUnique(true);
+    }
+
     public function handle(): void
     {
-        HealthCache::getInstance()->set(static::class, now()->unix());
-    }
-
-    public static function check(): bool
-    {
-        $cache = HealthCache::getInstance();
-        return (int) $cache->get(static::class, 0) + $cache->ttl() > now()->unix();
-    }
-
-    public static function isCacheOutdated(): bool
-    {
-        return HealthCache::getInstance()->has(static::class);
+        $this->adminNotifyService->markJobHealthy();
     }
 }

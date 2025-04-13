@@ -74,7 +74,10 @@ class CacheProvider implements CacheInterface
 
     public function set(string $key, mixed $value): void
     {
-        $this->cache->read($this->ttl, $key, $this->section);
+        if ($this->cache->read($this->ttl, $key, $this->section)) {
+            $this->cache->clean($key, $this->section);
+            $this->cache->read($this->ttl, $key, $this->section);
+        }
         $saveValue = $this->createValue($value);
 
         if (isset($saveValue)) {

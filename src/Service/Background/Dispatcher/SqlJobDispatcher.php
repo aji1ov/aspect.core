@@ -26,6 +26,9 @@ class SqlJobDispatcher implements JobDispatcherInterface
      */
     public function dispatch(Job $job, string $queue, int $startAt): void
     {
+        if ($job->checkUnique() && QueueTable::getCount(['SIGN' => $job->getSign()])) {
+            return;
+        }
         QueueTable::add([
             'SERIAL' => $job->serialize(),
             'SIGN' => $job->getSign(),

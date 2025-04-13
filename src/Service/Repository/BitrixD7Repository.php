@@ -3,6 +3,7 @@
 namespace Aspect\Lib\Service\Repository;
 
 use Aspect\Lib\Exception\AspectException;
+use Aspect\Lib\Struct\ServiceLocator;
 use Bitrix\Main\ORM\Data\DataManager;
 use Exception;
 
@@ -12,6 +13,8 @@ use Exception;
  */
 abstract class BitrixD7Repository extends CrudRepository
 {
+    use ServiceLocator;
+
     /**
      * @return class-string<DataManager>
      */

@@ -39,8 +39,8 @@ class Run extends Command
     {
         $startAt = time();
 
-        $seconds = intval($input->getOption('time'));
-        $max = intval($input->getOption('max'));
+        $seconds = (int)$input->getOption('time');
+        $max = (int)$input->getOption('max');
         $nowait = $input->getOption('nowait');
         $queues = $input->getOption('queue');
         $slow = $input->getOption('slow');

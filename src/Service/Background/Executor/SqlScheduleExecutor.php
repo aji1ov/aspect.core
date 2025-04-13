@@ -40,7 +40,7 @@ class SqlScheduleExecutor implements ScheduleExecutorInterface
                     ]);
                 } else if (time() > $stored[$registered[$sign]]['CHECK_TIME']) {
                     notice(Color::BLUE->wrap("Dispatch event: ") . Color::DARK_GREY->wrap($event->getDescription()));
-                    $this->dispatcher->dispatch($event->getJob(), Queue::CRON, $stored[$registered[$sign]]['CHECK_TIME']);
+                    $this->dispatcher->dispatch($event->getJob(), Queue::SCHEDULED, time());
                     ScheduleTable::update($stored[$registered[$sign]]['ID'], [
                         'CHECK_TIME' => $event->getCheckTime(time())
                     ]);
