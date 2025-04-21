@@ -2,10 +2,12 @@
 
 namespace Aspect\Lib\Transport\Blueprint;
 
+use Aspect\Lib\Transport\Transportable;
 use Aspect\Lib\Transport\TransportInterface;
 
 class BuiltinProperty extends BlueprintProperty implements CompatiblePropertyInterface
 {
+
     function export(mixed $object, array &$source, TransportInterface $transport): void
     {
         $value = $this->property->getValue($object);
@@ -13,7 +15,19 @@ class BuiltinProperty extends BlueprintProperty implements CompatiblePropertyInt
         if(is_array($value)) {
             $arrayData = [];
             foreach ($value as $key => $slot) {
-                $arrayData[$key] = $transport->toArray($slot);
+                if ($slot instanceof Transportable) {
+                    $arrayData[$key] = $transport->toArray($slot);
+                } else if (is_array($slot)) {
+                    $innerMap = [];
+                    $this->export($slot, $innerMap, $transport);
+                    $arrayData[$key] = $innerMap;
+                } else if(is_scalar($slot)) {
+                    $arrayData[$key] = $slot;
+                } else if(!isset($slot)){
+                    continue;
+                } else {
+                    throw new \Exception("Undefined export value");
+                }
             }
 
             $value = $arrayData;

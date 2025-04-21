@@ -29,6 +29,11 @@ class RepositorySelectQuery
         $this->filter = $filter;
     }
 
+    public function updateFilter(array $overrides): void
+    {
+        $this->filter = array_merge($this->filter, $overrides);
+    }
+
     public function getOffset(): int
     {
         return $this->offset;

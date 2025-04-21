@@ -28,6 +28,7 @@ class AdminMenuService
     private function getSectionItems(): array
     {
         return [
+            $this->getCronItems(),
             $this->getCommandItems(),
             $this->getInfoItems()
         ];
@@ -47,6 +48,17 @@ class AdminMenuService
                     "url" => "/bitrix/admin/aspect_info_cron.php",
                 ]
             ]
+        ];
+    }
+
+    private function getCronItems(): array
+    {
+        return [
+            "parent_menu" => "global_menu_aspect",
+            "text" => 'Планировщик задач',
+            "title" => "title",
+            "icon" => "fileman_menu_icon",
+            "url" => "/bitrix/admin/aspect_queue_list.php",
         ];
     }
 

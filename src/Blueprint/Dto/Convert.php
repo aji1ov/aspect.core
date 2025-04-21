@@ -2,10 +2,10 @@
 
 namespace Aspect\Lib\Blueprint\Dto;
 
+use Aspect\Lib\Support\Interfaces\ConverterInterface;
 use Aspect\Lib\Support\Interfaces\TransportEnricherInterface;
 use Aspect\Lib\Support\Interfaces\TransportExporterInterface;
 use Aspect\Lib\Transport\Blueprint\ExtensionProperty;
-use Aspect\Lib\Transport\Converter\ConverterInterface;
 use Aspect\Lib\Transport\TransportInterface;
 
 #[\Attribute(\Attribute::TARGET_PROPERTY)]

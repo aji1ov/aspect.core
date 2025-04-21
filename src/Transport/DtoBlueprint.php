@@ -6,12 +6,12 @@ use Aspect\Lib\Blueprint\DI\Fetch;
 use Aspect\Lib\Blueprint\Dto\Convert;
 use Aspect\Lib\Blueprint\Dto\Extension;
 use Aspect\Lib\Blueprint\Ignore;
+use Aspect\Lib\Support\Interfaces\ConverterInterface;
 use Aspect\Lib\Transport\Blueprint\BuiltinProperty;
 use Aspect\Lib\Transport\Blueprint\DtoProperty;
 use Aspect\Lib\Transport\Blueprint\EnumProperty;
 use Aspect\Lib\Transport\Blueprint\ExtensionProperty;
 use Aspect\Lib\Transport\Blueprint\UnionProperty;
-use Aspect\Lib\Transport\Converter\ConverterInterface;
 use Exception;
 use IteratorAggregate;
 use ReflectionClass;
@@ -77,6 +77,11 @@ class DtoBlueprint implements IteratorAggregate
             return;
         }
 
+        if ($converter = static::$autoConverter[$type->getName()]) {
+            $map[] = new ExtensionProperty($property, $type, [new Convert($converter)]);
+            return;
+        }
+
         if (is_a($type->getName(), Transportable::class, true)) {
             $map[] = new DtoProperty($property, $type);
             return;
@@ -84,11 +89,6 @@ class DtoBlueprint implements IteratorAggregate
 
         if (enum_exists($type->getName())) {
             $map[] = new EnumProperty($property, $type);
-            return;
-        }
-
-        if ($converter = static::$autoConverter[$type->getName()]) {
-            $map[] = new ExtensionProperty($property, $type, [new Convert($converter)]);
             return;
         }
 

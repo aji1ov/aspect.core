@@ -2,6 +2,7 @@
 
 namespace Aspect\Lib\Transport\Converter;
 
+use Aspect\Lib\Support\Interfaces\ConverterInterface;
 use Aspect\Lib\Transport\Blueprint\ExtensionProperty;
 use Aspect\Lib\Transport\TransportInterface;
 use Bitrix\Main\Type\DateTime;
