@@ -73,7 +73,7 @@ abstract class IBlockElementRepository extends CrudRepository
         throw new AspectException("Error on update entity: unknown entity primary");
     }
 
-    public function deleteOne(EntityInterface $entity): true
+    public function deleteOne(EntityInterface $entity): bool
     {
         return 0;
     }
@@ -98,7 +98,7 @@ abstract class IBlockElementRepository extends CrudRepository
         return count($result) > 1 ? $result : $result[0];
     }
 
-    public function delete(EntityInterface ...$entities): true
+    public function delete(EntityInterface ...$entities): bool
     {
         foreach ($entities as $entity) {
             $this->deleteOne($entity);

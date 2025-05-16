@@ -9,29 +9,28 @@ use Aspect\Lib\Blueprint\Table\Primary;
 use Aspect\Lib\Service\Repository\RepositoryEntity;
 use Aspect\Lib\Transport\Converter\YesNoConverter;
 
-class IBlockGenericEntity extends RepositoryEntity
+class IBlockPropertyEnumEntity extends RepositoryEntity
 {
-    #[Key('ID')]
     #[Primary]
+    #[Key('ID')]
     public ?int $id = null;
 
-    #[Key('IBLOCK_ID')]
-    public ?int $iblockId = null;
+    #[Key('PROPERTY_ID')]
+    public ?int $propertyId = null;
 
-    #[Key('NAME')]
-    public ?string $name = null;
+    #[Key('VALUE')]
+    public ?string $value = null;
 
-    #[Key('ACTIVE')]
     #[Convert(new YesNoConverter())]
-    public ?bool $active = null;
+    #[Key('DEF')]
+    public ?bool $def = null;
 
     #[Key('SORT')]
     public ?int $sort = null;
 
-    #[Key('CODE')]
-    public ?string $code = null;
-
     #[Key('XML_ID')]
     public ?string $xmlId = null;
 
+    #[Key('TMP_ID')]
+    public ?string $tmpId = null;
 }

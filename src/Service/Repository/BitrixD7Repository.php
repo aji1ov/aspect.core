@@ -141,7 +141,7 @@ abstract class BitrixD7Repository extends CrudRepository
         return $result->getId();
     }
 
-    public function deleteOne(EntityInterface $entity): true
+    public function deleteOne(EntityInterface $entity): bool
     {
         $fields = $entity->toArray();
         if ($primary = $this->splicePrimary($fields)) {
@@ -156,7 +156,7 @@ abstract class BitrixD7Repository extends CrudRepository
         throw new AspectException("Error on delete entity: unknown entity primary");
     }
 
-    public function delete(EntityInterface ...$entities): true
+    public function delete(EntityInterface ...$entities): bool
     {
         foreach ($entities as $entity) {
             $this->deleteOne($entity);

@@ -89,6 +89,20 @@ class EntityCollection implements \IteratorAggregate, \ArrayAccess
         return $this->getIterator();
     }
 
+    /**
+     * @return array<mixed,T>
+     */
+    public function map(callable $handler): array
+    {
+        $result = [];
+        foreach ($this->iterate() as $item)
+        {
+            $result[$handler($item)] = $item;
+        }
+
+        return $result;
+    }
+
     public function prefetch(): EntityIterator
     {
         $iterator = $this->iterate();

@@ -56,7 +56,7 @@ class IBlockPropertyEntity extends IBlockGenericEntity
     public ?string $userType = null;
 
     #[Key('USER_TYPE_SETTINGS')]
-    public ?string $userTypeSettings = null;
+    public array|string|null $userTypeSettings = null;
 
     #[Key('HINT')]
     public ?string $hint = null;

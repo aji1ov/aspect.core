@@ -13,7 +13,7 @@ abstract class SelectRepository extends BaseRepository
 {
     /**
      * @param array|null $filter
-     * @return T
+     * @return T|null
      */
     public function getOneBy(?array $filter = null): mixed
     {
@@ -30,6 +30,14 @@ abstract class SelectRepository extends BaseRepository
         $query->setFilter($filter ?? []);
 
         return $this->createCollection($query);
+    }
+
+    /**
+     * @return EntityCollection<T>
+     */
+    public function getAll(): EntityCollection
+    {
+        return $this->getBy();
     }
 
     /**
