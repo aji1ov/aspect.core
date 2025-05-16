@@ -10,7 +10,7 @@ abstract class CrudRepository extends SelectRepository
 {
     abstract public function createOne(EntityInterface $entity): int;
     abstract public function updateOne(EntityInterface $entity): int;
-    abstract public function deleteOne(EntityInterface $entity): true;
+    abstract public function deleteOne(EntityInterface $entity): bool;
 
     /**
      * @param EntityInterface ...$entities
@@ -24,5 +24,5 @@ abstract class CrudRepository extends SelectRepository
      */
     abstract public function update(EntityInterface ...$entities): array|int;
 
-    abstract public function delete(EntityInterface ...$entities): true;
+    abstract public function delete(EntityInterface ...$entities): bool;
 }

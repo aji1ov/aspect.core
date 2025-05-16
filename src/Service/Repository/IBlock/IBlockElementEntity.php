@@ -3,6 +3,7 @@
 namespace Aspect\Lib\Service\Repository\IBlock;
 
 use Aspect\Lib\Blueprint\Dto\Key;
+use Aspect\Lib\Transport\TransportInterface;
 use Bitrix\Iblock\PropertyTable;
 use Bitrix\Main\Type\DateTime;
 
@@ -79,9 +80,9 @@ abstract class IBlockElementEntity extends IBlockGenericEntity
         return $cls::getInstance();
     }
 
-    public static function new(): static
+    public static function new(?IBlockElementEntity $fromArray = null): static
     {
-        $entity = parent::new();
+        $entity = $fromArray ?? parent::new();
         $entity->iblockId = $entity->repository()->iblockId();
 
         $propertyKeys = array_flip(static::getPropertyKeys());
@@ -91,5 +92,34 @@ abstract class IBlockElementEntity extends IBlockGenericEntity
         }
 
         return $entity;
+    }
+
+    public static function fromArray(array $source, ?TransportInterface $transport = null): static
+    {
+        $entity = parent::fromArray($source, $transport);
+        return static::new($entity);
+    }
+
+    public function iblockEntity(): IBlockEntity
+    {
+        return IBlockRepository::getInstance()->getByPrimary($this->iblockId);
+    }
+
+    public function picture(int $pictureId, ?int $width = null, ?int $height = null, ?int $cropType = 2): array
+    {
+        $fileArray = \CFile::GetFileArray($pictureId);
+        if($width) {
+            if (!$height) {
+                $height = $width;
+            }
+
+            $fileArray = \CFile::ResizeImageGet($fileArray, ['width' => $width, 'height' => $height], $cropType);
+        }
+        return $fileArray;
+    }
+
+    public function detailPicture(?int $width = null, ?int $height = null, ?int $cropType = 2): array
+    {
+        return $this->picture($this->detailPictureId, $width, $height, $cropType);
     }
 }

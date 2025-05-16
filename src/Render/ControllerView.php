@@ -3,6 +3,8 @@
 namespace Aspect\Lib\Render;
 
 use Aspect\Lib\Support\Interfaces\ViewInterface;
+use Bitrix\Main\Page\Asset;
+use Bitrix\Main\Page\AssetShowTargetType;
 
 class ControllerView implements ViewInterface
 {
@@ -31,6 +33,15 @@ class ControllerView implements ViewInterface
         $component->includeComponentTemplate($this->view);
 
         return ob_get_clean();
+    }
+
+    public function renderAjax(): array
+    {
+        return [
+            'HTML' => $this->render(),
+            'SCRIPT' => Asset::getInstance()->getJs(AssetShowTargetType::TEMPLATE_PAGE),
+            'CSS' => Asset::getInstance()->getCss(AssetShowTargetType::TEMPLATE_PAGE)
+        ];
     }
 
     public function setTemplate(string $template): static

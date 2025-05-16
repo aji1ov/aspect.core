@@ -60,9 +60,13 @@ class DtoBlueprint implements IteratorAggregate
      */
     private function parseClass(ReflectionClass $class): void
     {
+        $released = [];
         do {
             foreach ($class->getProperties() as $property) {
-                $this->parseProperty($property, $this->map);
+                if(!$released[$property->name]) {
+                    $this->parseProperty($property, $this->map);
+                    $released[$property->name] = true;
+                }
             }
         } while ($class = $class->getParentClass());
     }
