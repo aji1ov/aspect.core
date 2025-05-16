@@ -6,21 +6,22 @@ use Aspect\Lib\Blueprint\Event\EventHandler;
 use Aspect\Lib\Facade\Yakov;
 use Aspect\Lib\Helper\ClassLoader;
 use Bitrix\Main\EventManager;
+use ReflectionException;
 
 class Repository
 {
     /**
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function makeEvents(): void
     {
         $handlerFunctions = [];
         foreach ($this->getPackages() as $package) {
-            $handlerFunctions = array_merge($handlerFunctions, $this->getHandlerFunctions($package));
+            $handlerFunctions[] = $this->getHandlerFunctions($package);
         }
 
         $eventManager = EventManager::getInstance();
-        foreach ($handlerFunctions as $handlerFunction) {
+        foreach (array_merge(...$handlerFunctions) as $handlerFunction) {
             $handlerFunction->subscribe($eventManager);
         }
 
@@ -29,7 +30,7 @@ class Repository
     /**
      * @param string $eventPackage
      * @return HandlerFunction[]
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function getHandlerFunctions(string $eventPackage): array
     {

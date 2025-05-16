@@ -21,6 +21,6 @@ abstract class EventHandler
     }
 
     abstract public function makeEventSource(array $input): EventSource;
-    abstract public function submitEventSource(EventSource $source, array &...$input): void;
+    abstract public function submitEventSource(EventSource $source, mixed &...$input): void;
     abstract public function spreadSelf(EventSource $source, array $argumentMap): array;
 }

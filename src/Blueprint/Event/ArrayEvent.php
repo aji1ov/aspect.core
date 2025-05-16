@@ -27,7 +27,7 @@ class ArrayEvent extends EventHandler
         return new ListEventSource($newData);
     }
 
-    public function submitEventSource(EventSource $source, array &...$input): void
+    public function submitEventSource(EventSource $source, mixed &...$input): void
     {
         $result = $source->getResult();
         foreach ($input as $key => $value) {
@@ -40,7 +40,7 @@ class ArrayEvent extends EventHandler
         $withSourceMap = [];
 
         foreach ($argumentMap as $argumentKey => $argumentTypes) {
-            if (in_array(EventSource::class, $argumentTypes) || in_array(ListEventSource::class, $argumentTypes)) {
+            if (in_array(EventSource::class, $argumentTypes, true) || in_array(ListEventSource::class, $argumentTypes, true)) {
                 $withSourceMap[$argumentKey] = $source;
                 unset($argumentMap[$argumentKey]);
             }

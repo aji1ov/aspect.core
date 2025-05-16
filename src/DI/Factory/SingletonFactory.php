@@ -19,7 +19,7 @@ class SingletonFactory extends MakeFactory
 
     public function make(Container $container)
     {
-        if (!static::$instances[$this->current]) {
+        if (!isset(static::$instances[$this->current])) {
             static::$instances[$this->current] = parent::make($container);
         }
 

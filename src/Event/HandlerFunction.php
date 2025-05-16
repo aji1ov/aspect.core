@@ -74,12 +74,12 @@ class HandlerFunction
 
         if ($type instanceof \ReflectionUnionType) {
             foreach ($type->getTypes() as $unionType) {
-                $preparedTypes = array_merge($preparedTypes, $this->prepareType($unionType));
+                $preparedTypes[] = $this->prepareType($unionType);
             }
         } else if ($type instanceof \ReflectionNamedType) {
-            $preparedTypes[] = $type->getName();
+            $preparedTypes[] = [$type->getName()];
         }
 
-        return array_unique($preparedTypes);
+        return array_unique(array_merge(...$preparedTypes));
     }
 }

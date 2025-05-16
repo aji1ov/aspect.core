@@ -54,6 +54,11 @@ class ProcOpenScriptProcess implements ScriptProcessInterface
         return stream_get_contents($this->pipes[static::PIPE_OUT]).stream_get_contents($this->pipes[static::PIPE_ERR]);
     }
 
+    public function write(string $input): void
+    {
+        fwrite($this->pipes[static::PIPE_IN], $input);
+    }
+
     public function close(): void
     {
         proc_close($this->process);

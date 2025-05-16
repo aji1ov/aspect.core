@@ -15,6 +15,7 @@ use Aspect\Lib\Facade\Yakov;
 use Aspect\Lib\Helper\ClassLoader;
 use Aspect\Lib\Struct\PrettyPrint;
 use Aspect\Lib\Struct\Singleton;
+use Aspect\Lib\Support\Interfaces\RuntimeInterface;
 use function Aspect\Lib\DI\factory;
 use function Aspect\Lib\DI\object;
 
@@ -49,8 +50,25 @@ final class Application
         $this->container = new DI\Container($locator);
         $this->fake = new Fake($locator);
 
-        return function () {
-            (new Repository())->makeEvents();
+
+        $runtimeClasses = (new ClassLoader())->getClassesFromYakov(
+            Yakov::getPathToRuntime(),
+            fn ($className) => is_a($className, RuntimeInterface::class, true)
+        );
+
+        $runtimes = array_map(static fn ($className) => new $className(), $runtimeClasses);
+
+        /** @var RuntimeInterface $runtime */
+        foreach ($runtimes as $runtime) {
+            $runtime->onBitrixLoaded();
+        }
+
+        return static function () use ($runtimes) {
+            $self = Application::getInstance();
+            /** @var RuntimeInterface $runtime */
+            foreach ($runtimes as $runtime) {
+                $runtime->onReady($self);
+            }
         };
     }
 

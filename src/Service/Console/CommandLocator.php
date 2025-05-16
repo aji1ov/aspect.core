@@ -74,7 +74,7 @@ class CommandLocator
                     $section = array_shift($nameParts);
                     $fullname[] = $section;
 
-                    if(!$head[implode(".", $fullname)]['SECTION']) {
+                    if(!isset($head[implode(".", $fullname)]['SECTION'])) {
                         $head[implode(".", $fullname)]['SECTION'] = [];
                     }
 

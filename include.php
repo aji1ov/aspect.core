@@ -52,7 +52,5 @@ function queue(string|callable|Job $job, ?string $taggedQueue = null, int|Carbon
 }
 
 if (class_exists(Application::class)) {
-    Application::getInstance();
+    $app = Application::getInstance();
 }
-
-Carbon::setLocale('ru');

@@ -66,11 +66,11 @@ class Help extends Command
 
     private function printCommandSection(Table $table, array $section) {
         foreach ($section as $name => $commandData) {
-            if($command = $commandData['COMMAND']) {
+            if(isset($commandData['COMMAND']) && $command = $commandData['COMMAND']) {
                 $table->addRow(["  " . $this->colorize(Color::GREEN, $name), $command::getDescription()]);
             }
 
-            if ($commandData['SECTION']) {
+            if (isset($commandData['SECTION'])) {
                 $table->addRow([$this->colorize(Color::DARK_GREY, $name)]);
                 $this->printCommandSection($table, $commandData['SECTION']);
             }

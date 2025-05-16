@@ -17,9 +17,9 @@ trait Singleton
     public static final function getInstance(): static
     {
         $called_class = get_called_class();
-        if(!static::$instance[$called_class]) {
+        if(!isset(static::$instance[$called_class])) {
 
-            if(static::$make[$called_class]) {
+            if(isset(static::$make[$called_class])) {
                 throw new \RuntimeException("Circular singleton call");
             }
 
@@ -41,7 +41,7 @@ trait Singleton
     private function __clone(){}
     private function __wakeup(){}
     private function __construct() {
-        if(static::$instance[static::class]) {
+        if(isset(static::$instance[static::class])) {
             throw new Exception('Multiple singleton initialization');
         }
     }

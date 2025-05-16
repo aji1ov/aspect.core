@@ -4,6 +4,7 @@ namespace Aspect\Lib\Table;
 
 use Bitrix\Main\ORM\Fields;
 use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\SystemException;
 
 class QueueTable extends DataManager
 {
@@ -16,8 +17,8 @@ class QueueTable extends DataManager
     }
 
     /**
-     * @return Entity\IntegerField[]
-     * @throws \Bitrix\Main\SystemException
+     * @return Fields\ScalarField[]
+     * @throws SystemException
      */
     public static function getMap()
     {

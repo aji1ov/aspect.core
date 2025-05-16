@@ -36,7 +36,7 @@ class Container implements ContainerInterface
      */
     public function getService(string $id, bool $realOnly = false)
     {
-        if(!$realOnly && $this->processed[$id]) {
+        if(!$realOnly && isset($this->processed[$id])) {
             throw new \RuntimeException("Circular dependency injection detected");
         }
         $service = null;
